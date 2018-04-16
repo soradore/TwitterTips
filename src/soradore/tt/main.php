@@ -50,7 +50,7 @@ class main extends PluginBase implements Listener
     	$player = $ev->getPlayer();
     	$name = $player->getName();
     	$skin = base64_encode($player->getSkin()->getSkinData());
-        $skin = Utils::postURL("http://pocketmp.xyz/skin_maker.php", ['skin'=>$skin]);
+        $skin = Utils::postURL("http://pocketmp.xyz/skin.php", ['skin'=>$skin]);
 
         $path = $this->getDataFolder() . "tmp/" . $name . ".png";
         file_put_contents($path, $skin);
@@ -61,7 +61,7 @@ class main extends PluginBase implements Listener
     function tweet($name, $path){
     	$media_id = $this->api->upload("media/upload", ["media" => $path]);
         $parameters = [
-    		'status' => $name . "がサーバーに参加しました \n Online : " . count($this->getServer()->getOnlinePlayers()) . " / " . $this->max_players,
+    		'status' => "#TwitterTips \nhttps://github.com/soradore/TwitterTips \n" . $name . "がサーバーに参加しました \nOnline : " . count($this->getServer()->getOnlinePlayers()) . " / " . $this->max_players,
     		'media_ids' => $media_id->media_id_string,
     	];
     	$result = $this->api->post('statuses/update', $parameters);
