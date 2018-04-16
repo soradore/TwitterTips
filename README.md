@@ -1,6 +1,6 @@
 # TwitterTips
 
 ## Usage
-[ここ](https://apps.twitter.com)
+[linkref]: https://apps.twitter.com "TwitterApps"
 
 でアプリケーション登録をおこない,Tokenなどを取得し、config.ymlに記入
