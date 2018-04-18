@@ -1,6 +1,6 @@
 name: TwitterTips
 main: soradore\tt\main
-version: 1.0
+version: 1.3
 api: [3.0.0-ALPHA11]
 load: POSTWORLD
 author: soradore
