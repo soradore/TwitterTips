@@ -26,7 +26,12 @@ class main extends PluginBase implements Listener
     public function onEnable(){
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
 
-        if(!file_exists($this->getDataFolder())) mkdir($this->getDataFolder(), 0744, true);
+        if(!file_exists($this->getDataFolder())){
+        	mkdir($this->getDataFolder(), 0744, true);
+        }
+        if(!file_exists($this->getDataFolder() . "tmp/")){
+        	mkdir($this->getDataFolder() . "tmp/", 0744, true);
+        }
         $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML,
                              [
                               "CONSUMER_KEY" => "",
@@ -54,14 +59,20 @@ class main extends PluginBase implements Listener
 
         $path = $this->getDataFolder() . "tmp/" . $name . ".png";
         file_put_contents($path, $skin);
-        $this->tweet($name, $path);
+
+        $mes = "#TwitterTips \nhttps://github.com/soradore/TwitterTips \n";
+        $mes .= $name;
+        $mes .= "がサーバーに参加しました \nOnline : ";
+        $mes .= count($this->getServer()->getOnlinePlayers()) . " / " . $this->max_players;
+
+        $this->tweet($mes, $path);
     }
 
 
-    function tweet($name, $path){
+    function tweet($mes, $path){
     	$media_id = $this->api->upload("media/upload", ["media" => $path]);
         $parameters = [
-    		'status' => "#TwitterTips \nhttps://github.com/soradore/TwitterTips \n" . $name . "がサーバーに参加しました \nOnline : " . count($this->getServer()->getOnlinePlayers()) . " / " . $this->max_players,
+    		'status' => $mes,
     		'media_ids' => $media_id->media_id_string,
     	];
     	$result = $this->api->post('statuses/update', $parameters);
